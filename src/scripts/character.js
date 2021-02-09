@@ -1,13 +1,13 @@
 import {ctx, canvas} from './canvas'
 import {uiSideGap, dungeonHeight } from './ui';
 
-const char = {
+export const char = {
     x: (canvas.width * .1),
     y: (canvas.height * .6),
     width: 100,
     height: 100,
     actualScale: canvas.height*.2/100,
-    frameX: 1,
+    frameX: 0,
     frameY: 0,
     speed: (canvas.height*.02),
     moving: false
@@ -16,13 +16,12 @@ const char = {
 const charSprite = new Image();
 charSprite.src = "src/sprites/Huntress/Sprites/Character/Run.png";
 
-function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
+export function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
 
 export function animate(){
     drawSprite(charSprite, char.width * char.frameX, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
-    // requestAnimationFrame(animate);
 }
 
 function handleSpriteFrame() {
@@ -41,6 +40,8 @@ const keys = {
     's': false,
     'd': false,
 };
+
+
 
 window.addEventListener("keydown", (e) => {
     e.preventDefault();
@@ -68,4 +69,5 @@ export function moveChar() {
         char.x += char.speed;
         handleSpriteFrame()} 
 }
+
 

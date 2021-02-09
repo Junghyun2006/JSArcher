@@ -1,10 +1,10 @@
 body {
-  background-color: #ccf;
+  background-color: darkgray;
   color: blue;
   display: flex;
   flex-direction: column;
 }
-.center {
+/* .center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +36,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: blueviolet;
   font-weight: 500;
-  font-size: 5vmin;
+  font-size: 5vmin;wa
 }
 .image-card {
   background-image: url(images/yoda-stitch.jpg);
@@ -44,6 +44,6 @@ body {
 }
 h2 {
   font-size: 3rem;
-}
+} */ */
 
-/*# sourceMappingURL=main.css.map*/
+/*# sourceMappingURL=main.css.map

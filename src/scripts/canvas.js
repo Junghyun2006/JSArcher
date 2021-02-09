@@ -4,7 +4,7 @@ canvas.width = window.innerWidth - 20;
 canvas.height = window.innerHeight - 20;
 
 const drawCanvas = () => {
-    ctx.fillStyle = 'gray';
+    ctx.fillStyle = 'black';
     ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
 }
 

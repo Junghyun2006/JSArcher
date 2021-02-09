@@ -10,7 +10,7 @@
     "not dead"
   ],
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js && NODE_ENV=development",
+    "start": "webpack-dev-server --watch --config webpack.dev.js && NODE_ENV=development",
     "webpack:watch": "webpack --watch --config webpack.dev.js && NODE_ENV=development",
     "webpack:build": "webpack --config webpack.prod.js  --optimize-minimize && NODE_ENV=production"
   },
