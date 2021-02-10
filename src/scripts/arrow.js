@@ -1,5 +1,5 @@
 import {ctx, canvas} from './canvas'
-import {char} from './character'
+import {char, handleShootingFrame } from './character'
 const arrowSprite = new Image();
 arrowSprite.src = "src/sprites/Huntress/Sprites/Arrow/Move.png";
 
@@ -35,9 +35,11 @@ class Arrow {
     }
 
     update() {
-        this.draw();
-        this.x = this.x + this.speed.x
-        this.y = this.y + this.speed.y
+        if (this.x - this.width*(canvas.width*.00075)> (canvas.width*0.0183) && this.x + this.width*(canvas.width*.001) < (canvas.width*0.982) && this.y + this.height*(canvas.width*.002) < (canvas.height*0.9671) && this.y - this.height*(canvas.width*.003) > (canvas.height*0.1932)) {
+            this.draw();
+            this.x = this.x + this.speed.x
+            this.y = this.y + this.speed.y
+        } 
     }
 }
 
@@ -48,6 +50,7 @@ export function animateArrows() {
     arrows.forEach(arrow => {
         arrow.update()
     }) 
+    handleShootingFrame()
 }
 
 window.addEventListener('click', (event) => {
@@ -58,8 +61,8 @@ window.addEventListener('click', (event) => {
         x: Math.cos(angle) * (canvas.height*.05),
         y: Math.sin(angle) * (canvas.height*.05)
     }
-
-    arrows.push(new Arrow( 
+    setTimeout(() => {
+        arrows.push(new Arrow( 
         char.x + (canvas.height*.2/2), 
         char.y + (canvas.height*.19/2), 
         speed, 
@@ -68,6 +71,11 @@ window.addEventListener('click', (event) => {
         0, 
         arrowSprite,
         angle))
+    }, 300)
+    char.frameY = 0;
+    char.shooting = true;
+    char.clickXPos = event.clientX;
+    console.log(event.clientX, event.clientY, canvas.width, canvas.height)
 })
 
 

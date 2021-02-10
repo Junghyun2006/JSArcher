@@ -10,23 +10,59 @@ export const char = {
     frameX: 0,
     frameY: 0,
     speed: (canvas.height*.02),
-    moving: false
+    moving: false,
+    flip: 'right',
+    shooting: false,
+    counter: 0,
+    clickXPos: 0
 };
 
-const charSprite = new Image();
+const charSprite = new Image(); // running
 charSprite.src = "src/sprites/Huntress/Sprites/Character/Run.png";
 
+const charShooting = new Image();
+charShooting.src = "src/sprites/Huntress/Sprites/Character/Attack.png"
+
 export function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
-    ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
+    if (char.flip === 'right') {
+        ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
+    } else if (char.flip != 'right') {
+        ctx.save();
+        ctx.translate(char.x+(canvas.height*.2), char.y)+(canvas.height*.2);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, sX, sY, sW, sH, 0, 0, dW, dH) ;
+        ctx.restore();
+    }
+
+   
+    
 }
 
 export function animate(){
-    drawSprite(charSprite, char.width * char.frameX, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
+
+    if (char.shooting) { 
+        char.flip = char.clickXPos > char.x ? 'right' : 'left'
+        drawSprite(charShooting, char.width * char.frameY, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
+        if (char.frameY === 5) char.shooting = false;   
+    } else {
+        drawSprite(charSprite, char.width * char.frameX, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
+    } 
+    requestAnimationFrame(animate)
 }
 
-function handleSpriteFrame() {
+animate()
+
+function handleSpriteFrame() {  
     if (char.frameX < 7 ) char.frameX++;
-    else char.frameX = 0;
+    else char.frameX = 0;   
+}
+
+export function handleShootingFrame() {
+    char.counter+=1;
+    if (char.counter % 1.5 === 0) {
+        if (char.frameY < 5) char.frameY++;
+        else char.frameY = 0;
+    }
 }
 
 
@@ -64,9 +100,11 @@ export function moveChar() {
         handleSpriteFrame()} 
     if ((keys['ArrowLeft'] || keys["a"]) && (char.x > ((uiSideGap)-30*char.actualScale))) {
         char.x -= char.speed;
+        char.flip = 'left'
         handleSpriteFrame()} 
     if ((keys['ArrowRight'] || keys["d"]) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale))) {
         char.x += char.speed;
+        char.flip = 'right'
         handleSpriteFrame()} 
 }
 
