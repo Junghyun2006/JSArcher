@@ -9,7 +9,7 @@ export const char = {
     actualScale: canvas.height*.2/100,
     frameX: 0,
     frameY: 0,
-    speed: (canvas.height*.02),
+    speed: (canvas.height*.010),
     moving: false,
     flip: 'right',
     shooting: false,
@@ -47,19 +47,24 @@ export function animate(){
     } else {
         drawSprite(charSprite, char.width * char.frameX, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
     } 
+  
     requestAnimationFrame(animate)
+  
+    
 }
 
 animate()
 
 function handleSpriteFrame() {  
-    if (char.frameX < 7 ) char.frameX++;
-    else char.frameX = 0;   
+    if (char.counter % 3 === 0) {
+       if (char.frameX < 7 ) char.frameX++;
+       else char.frameX = 0;  
+    }    
 }
 
 export function handleShootingFrame() {
     char.counter+=1;
-    if (char.counter % 1.5 === 0) {
+    if (char.counter % 3 === 0) {
         if (char.frameY < 5) char.frameY++;
         else char.frameY = 0;
     }
@@ -83,6 +88,7 @@ window.addEventListener("keydown", (e) => {
     e.preventDefault();
     keys[e.key] = true;
     // char.moving = true;
+    console.log(e.key)
 });
 
 window.addEventListener("keyup", (e) => {
@@ -106,6 +112,8 @@ export function moveChar() {
         char.x += char.speed;
         char.flip = 'right'
         handleSpriteFrame()} 
+    if (keys[' ']) {
+        char.flip === 'right' ? char.x += char.speed*1.5 : char.x -= char.speed*1.5
+    }
 }
-
 
