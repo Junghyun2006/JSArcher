@@ -160,10 +160,7 @@ export function animateSlime() {
 
     // slime1.handleSlimeAnimation()
     // slime1.handleMovement()
-    requestAnimationFrame(animateSlime)
 }
-
-animateSlime()
 
 
 

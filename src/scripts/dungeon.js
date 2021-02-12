@@ -57,11 +57,8 @@ export function drawDirection() {
 
     if (slimes.length < 1 && dungeon.frameX === 0) directionSprite.toggle = "on";
     if (dungeon.frameX === 150) directionSprite.toggle = "off";
-    
-    requestAnimationFrame(drawDirection);  
 }
 
-drawDirection()
 
 export const map = {
     width: 5888,

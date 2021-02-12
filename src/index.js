@@ -3,7 +3,7 @@ import {drawUi} from './scripts/ui';
 import {moveChar, animate} from './scripts/character';
 import {animateArrows} from "./scripts/arrow";
 import {animateSlime, slimes} from "./scripts/slime"
-import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap} from "./scripts/dungeon"
+import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap, drawDirection} from "./scripts/dungeon"
 
 
 window.onload = function() {
@@ -13,8 +13,10 @@ window.onload = function() {
         drawCanvas();
         drawUi();
         drawDungeon(dungeonImg);
-        drawMap()
-        animate()
+        drawDirection();
+        drawMap();
+        animateSlime();
+        animate();
         moveChar();
         animateArrows();
         drawDungeon(dungeonOverlay)
