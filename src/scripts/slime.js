@@ -7,7 +7,7 @@ slime.src  = "src/sprites/Slime/SlimeA.png";
 class Slime {
     constructor(speed, width, height, frameX, sprite, randomFactor) {
         this.x = (Math.random() * (canvas.width*0.96 - canvas.width*0.5) + canvas.width*0.5);
-        this.y = (Math.random() * (canvas.height*0.93 - canvas.height*0.1932) + canvas.height*0.1932);
+        this.y = (Math.random() * (canvas.height*0.93 - canvas.height*0.45) + canvas.height*0.45);
         this.scale = (canvas.height*.05)
         this.centerPointX = this.x + this.scale/2 
         this.centerPointY = this.y + this.scale/2
@@ -22,7 +22,7 @@ class Slime {
         this.xSpeed = 0;
         this.ySpeed = 0;
         this.moving = false;
-        this.stop = 60;
+        this.stop = 10;
         this.xMove = 0;
         this.yMove = 0;
         this.randomFactor = randomFactor
@@ -76,17 +76,17 @@ class Slime {
             this.stop -= 1;
             if(this.stop <= 0) {
                 this.moving = false;
-                this.stop = 60;
+                this.stop = 10;
             }
         } else {
             if(this.stop > 0) {
                 this.stop -= 1;
                 this.draw();
             } else {
-                if (Math.abs(char.x - this.x) < 400 && Math.abs(char.y - this.y) < 400 ) {  //&& this.randomFactor % 2 === 0
-                    this.xMove = char.x+char.height;
-                    this.yMove = char.y+char.width;
-                    if (Math.abs(char.x - this.x) < 400) {
+                if (Math.abs(char.x - this.x) < canvas.height/4 && Math.abs(char.y - this.y) < canvas.height/4   ) { // && this.randomFactor % 2 === 0
+                    this.xMove = char.x+char.height/2;
+                    this.yMove = char.y+char.width/2;
+                    if (Math.abs(char.x - this.x) < canvas.height/4) {
                         this.xSpeed = (this.xMove - this.x)/30;
                         this.ySpeed = (this.yMove - this.y)/30;
                     } else {
@@ -95,8 +95,8 @@ class Slime {
                     }
                  
                 } else {
-                    this.xMove = (Math.random() * (canvas.width*0.982 - canvas.width*0.02) + canvas.width*0.02) + 100;
-                    this.yMove = (Math.random() * (canvas.height*0.95 - canvas.height*0.1932) + canvas.height*0.1932) + 100;
+                    this.xMove = (Math.random() * (canvas.width*0.932 - canvas.width*0.02) + canvas.width*0.02) + canvas.width*0.05;
+                    this.yMove = (Math.random() * (canvas.height*0.9 - canvas.height*0.5) + canvas.height*0.45) + canvas.height*0.045;
                     this.xSpeed = (this.xMove - this.x)/120;
                     this.ySpeed = (this.yMove - this.y)/120;
                 }   
@@ -110,7 +110,7 @@ class Slime {
     }
 }
 
-const slimes = [];
+export const slimes = [];
 
 function createSlimes(count){
 
@@ -131,7 +131,7 @@ function createSlimes(count){
     }
 }
 
-createSlimes(6)
+createSlimes(8)
 
 export function animateSlime() {
     slimes.forEach((slime, index) => {
@@ -154,6 +154,7 @@ export function animateSlime() {
             //         console.log('hit!')
             //     }
             })  
+        
                 
     })
 
@@ -161,8 +162,6 @@ export function animateSlime() {
     // slime1.handleMovement()
     requestAnimationFrame(animateSlime)
 }
-
-
 
 animateSlime()
 

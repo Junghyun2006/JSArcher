@@ -1,5 +1,7 @@
 import {ctx, canvas} from './canvas'
 import {uiSideGap, dungeonHeight } from './ui';
+import {dungeon} from './dungeon'
+import {slimes} from './slime'
 
 export const char = {
     x: (canvas.width * .1),
@@ -9,7 +11,7 @@ export const char = {
     actualScale: canvas.height*.2/100,
     frameX: 0,
     frameY: 0,
-    speed: (canvas.height*.010),
+    speed: (canvas.height*.005),
     moving: false,
     flip: 'right',
     shooting: false,
@@ -42,10 +44,29 @@ export function animate(){
 
     if (char.shooting) { 
         char.flip = char.clickXPos > char.x ? 'right' : 'left'
-        drawSprite(charShooting, char.width * char.frameY, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
+        drawSprite(
+            charShooting, 
+            char.width * char.frameY, 
+            0, 
+            char.width, 
+            char.height, 
+            char.x, 
+            char.y, 
+            (canvas.height*.2), 
+            (canvas.height*.2))
+
         if (char.frameY === 5) char.shooting = false;   
     } else {
-        drawSprite(charSprite, char.width * char.frameX, 0, char.width, char.height, char.x, char.y, (canvas.height*.2), (canvas.height*.2))
+        drawSprite(
+            charSprite, 
+            char.width * char.frameX, 
+            0, 
+            char.width, 
+            char.height, 
+            char.x, 
+            char.y, 
+            (canvas.height*.2), 
+            (canvas.height*.2))
     } 
   
     requestAnimationFrame(animate)
@@ -56,7 +77,7 @@ export function animate(){
 animate()
 
 function handleSpriteFrame() {  
-    if (char.counter % 3 === 0) {
+    if (char.counter % 6 === 0) {
        if (char.frameX < 7 ) char.frameX++;
        else char.frameX = 0;  
     }    
@@ -98,22 +119,25 @@ window.addEventListener("keyup", (e) => {
 });
 
 export function moveChar() {
-    if ((keys['ArrowUp'] || keys["w"]) && (char.y > (canvas.height - dungeonHeight- 40*char.actualScale))) {
+    if ((keys['ArrowUp'] || keys["w"]) && (char.y > (canvas.height *0.4 ))) { //- dungeonHeight- 40*char.actualScale
         char.y -= char.speed;
+        
         handleSpriteFrame()}
     if ((keys['ArrowDown'] || keys["s"]) && (char.y < (canvas.height-(uiSideGap)-75*char.actualScale))) {
         char.y += char.speed;
         handleSpriteFrame()} 
     if ((keys['ArrowLeft'] || keys["a"]) && (char.x > ((uiSideGap)-30*char.actualScale))) {
         char.x -= char.speed;
+        // if (dungeon.frameX != 0) dungeon.frameX -= 1;
         char.flip = 'left'
         handleSpriteFrame()} 
     if ((keys['ArrowRight'] || keys["d"]) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale))) {
         char.x += char.speed;
-        char.flip = 'right'
+        if (dungeon.frameX < 490 && slimes.length < 1) dungeon.frameX += 1;
+        char.flip = 'right';
         handleSpriteFrame()} 
     if (keys[' ']) {
-        char.flip === 'right' ? char.x += char.speed*1.5 : char.x -= char.speed*1.5
+        char.flip === 'right' ? char.x += char.speed*4 : char.x -= char.speed*4
     }
 }
 

@@ -80,7 +80,6 @@ export function animateArrows() {
             }, 0)
             
         }
-        // console.log(arrow,i)
     }) 
     handleShootingFrame()
 }
@@ -107,7 +106,6 @@ window.addEventListener('click', (event) => {
     // }, 50)
     char.frameY = 0;
     char.shooting = true;
-    char.clickXPos = event.clientX;
 
 })
 
