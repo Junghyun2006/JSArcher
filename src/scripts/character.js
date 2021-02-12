@@ -1,7 +1,8 @@
 import {ctx, canvas} from './canvas'
 import {uiSideGap, dungeonHeight } from './ui';
-import {dungeon} from './dungeon'
+import {dungeon, map} from './dungeon'
 import {slimes} from './slime'
+
 
 export const char = {
     x: (canvas.width * .1),
@@ -68,13 +69,9 @@ export function animate(){
             (canvas.height*.2), 
             (canvas.height*.2))
     } 
-  
-    requestAnimationFrame(animate)
-  
     
 }
 
-animate()
 
 function handleSpriteFrame() {  
     if (char.counter % 6 === 0) {
@@ -133,7 +130,10 @@ export function moveChar() {
         handleSpriteFrame()} 
     if ((keys['ArrowRight'] || keys["d"]) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale))) {
         char.x += char.speed;
-        if (dungeon.frameX < 490 && slimes.length < 1) dungeon.frameX += 1;
+        if (dungeon.frameX < 490 && slimes.length < 1) {
+            dungeon.frameX += 1;
+            map.location += (dungeon.frameX * canvas.width*.244 * .0000047736)
+        } 
         char.flip = 'right';
         handleSpriteFrame()} 
     if (keys[' ']) {

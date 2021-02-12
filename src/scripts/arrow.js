@@ -19,6 +19,8 @@ class Arrow {
         this.top = this.y
         this.bot = this.y + this.height*(canvas.height*.001)
         this.hit = false;
+        this.counter = 1;
+        this.airToggle = 'off';
     }
 
     draw() {
@@ -35,18 +37,18 @@ class Arrow {
         this.x, 
         this.y, 
         this.width*(canvas.width*.001), 
-        this.height*(canvas.height*.001))
+        this.height*(canvas.height*.00175))
         ctx.restore()     
-
-        setTimeout(()=> {
-                ctx.save()
-                ctx.translate(this.x, this.y)
-                ctx.rotate(this.angle)
-                ctx.translate(-(this.x), -(this.y))
-                ctx.fillStyle = 'rgba(135,206,200,0.1)'
-                ctx.fillRect(this.x-(canvas.width*0.1), this.y, this.width+(canvas.width*0.1), this.height+3)
-                ctx.restore()
-            }, 50)
+        if (this.counter++ % 10 === 0) this.airToggle = 'on'
+        if (this.airToggle === 'on') {
+            ctx.save()
+            ctx.translate(this.x, this.y)
+            ctx.rotate(this.angle)
+            ctx.translate(-(this.x), -(this.y))
+            ctx.fillStyle = 'rgba(44, 130, 201,0.3)'
+            ctx.fillRect(this.x-(canvas.width*0.1), this.y, this.width+(canvas.width*0.1), this.height+3)
+            ctx.restore()
+        }    
     }
 
     update() {
@@ -106,6 +108,7 @@ window.addEventListener('click', (event) => {
     // }, 50)
     char.frameY = 0;
     char.shooting = true;
+    char.clickXPos = event.clientX
 
 })
 

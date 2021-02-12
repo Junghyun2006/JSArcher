@@ -1,9 +1,9 @@
 import {drawCanvas, ctx} from './scripts/canvas';
 import {drawUi} from './scripts/ui';
-import {moveChar} from './scripts/character';
+import {moveChar, animate} from './scripts/character';
 import {animateArrows} from "./scripts/arrow";
-import {animateSlime} from "./scripts/slime"
-import {drawDungeon, dungeonImg, dungeonOverlay, drawDirection} from "./scripts/dungeon"
+import {animateSlime, slimes} from "./scripts/slime"
+import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap} from "./scripts/dungeon"
 
 
 window.onload = function() {
@@ -13,9 +13,11 @@ window.onload = function() {
         drawCanvas();
         drawUi();
         drawDungeon(dungeonImg);
+        drawMap()
+        animate()
         moveChar();
-        drawDungeon(dungeonOverlay)
         animateArrows();
+        drawDungeon(dungeonOverlay)
     }, 1000/framesPerSecond);
 }
 

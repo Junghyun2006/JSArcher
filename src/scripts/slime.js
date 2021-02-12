@@ -131,7 +131,7 @@ function createSlimes(count){
     }
 }
 
-createSlimes(8)
+createSlimes(5)
 
 export function animateSlime() {
     slimes.forEach((slime, index) => {
