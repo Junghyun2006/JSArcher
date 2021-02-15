@@ -20,7 +20,6 @@ export function drawDungeon(image) {
         canvas.width * 0.976,
         canvas.height * 0.78
     )
-    console.log(dungeon.frameX)
 }
 
 export const dungeon = {

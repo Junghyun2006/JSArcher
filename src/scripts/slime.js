@@ -1,6 +1,8 @@
-import {ctx, canvas} from './canvas'
+import {ctx, canvas} from './canvas';
 import { drawSprite, animate, char } from './character';
-import {arrows} from './arrow'
+import {arrows} from './arrow';
+import {heart, heartUI} from './heart';
+
 const slime = new Image();
 slime.src  = "src/sprites/Slime/SlimeA.png";
 
@@ -8,9 +10,9 @@ class Slime {
     constructor(speed, width, height, frameX, sprite, randomFactor) {
         this.x = (Math.random() * (canvas.width*0.96 - canvas.width*0.5) + canvas.width*0.5);
         this.y = (Math.random() * (canvas.height*0.93 - canvas.height*0.45) + canvas.height*0.45);
-        this.scale = (canvas.height*.05)
-        this.centerPointX = this.x + this.scale/2 
-        this.centerPointY = this.y + this.scale/2
+        this.scale = (canvas.height*.05);
+        this.centerPointX = this.x + this.scale/2; 
+        this.centerPointY = this.y + this.scale/2;
         this.speed = speed;
         this.width = width;
         this.height = height;
@@ -25,11 +27,11 @@ class Slime {
         this.stop = 10;
         this.xMove = 0;
         this.yMove = 0;
-        this.randomFactor = randomFactor
-        this.left = this.x
-        this.right = this.x + this.scale
-        this.top = this.y
-        this.bot = this.y + this.scale
+        this.randomFactor = randomFactor;
+        this.left = this.x;
+        this.right = this.x + this.scale;
+        this.top = this.y;
+        this.bot = this.y + this.scale;
     }
 
     draw() {
@@ -84,8 +86,8 @@ class Slime {
                 this.draw();
             } else {
                 if (Math.abs(char.x - this.x) < canvas.height/4 && Math.abs(char.y - this.y) < canvas.height/4   ) { // && this.randomFactor % 2 === 0
-                    this.xMove = char.x+char.height/2;
-                    this.yMove = char.y+char.width/2;
+                    this.xMove = char.centerPointX
+                    this.yMove = char.centerPointY
                     if (Math.abs(char.x - this.x) < canvas.height/4) {
                         this.xSpeed = (this.xMove - this.x)/30;
                         this.ySpeed = (this.yMove - this.y)/30;
@@ -134,15 +136,16 @@ function createSlimes(count){
 createSlimes(5)
 
 export function animateSlime() {
+    heartUI.counter++
     slimes.forEach((slime, index) => {
         slime.handleSlimeAnimation()
         slime.handleMovement()
        
         arrows.forEach(arrow => {
-            const distance = Math.hypot(arrow.x - slime.centerPointX, arrow.y - slime.centerPointY)
+            const arrDistance = Math.hypot(arrow.x - slime.centerPointX, arrow.y - slime.centerPointY)
             // console.log(distance)
 
-            if ((distance - slime.scale/2) < 1) {
+            if ((arrDistance - slime.scale/2) < 1) {
                 slimes.splice(index, 1)
                 arrow.hit = true; 
             }
@@ -155,11 +158,13 @@ export function animateSlime() {
             //     }
             })  
         
+        const charDistance = Math.hypot(slime.centerPointX - char.centerPointX, slime.centerPointY - char.centerPointY) 
+        if ((charDistance - slime.scale/2 - char.scale/2) < 1 && heartUI.heartCount > 0 && heartUI.counter % 60 === 0) {
+            heartUI.heartCount -= 1
+        }
+        console.log(char.centerPointX, char.centerPointY)
                 
     })
-
-    // slime1.handleSlimeAnimation()
-    // slime1.handleMovement()
 }
 
 
