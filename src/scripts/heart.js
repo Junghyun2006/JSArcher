@@ -14,7 +14,7 @@ function drawHeart(arr) {
         ctx.drawImage(
             heartImg,
             canvas.width * heartPos,
-            canvas.height *.023,
+            canvas.height *.015,
             canvas.width * 0.1,
             canvas.width * 0.1
         )}
