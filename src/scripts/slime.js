@@ -24,10 +24,10 @@ class Slime {
         this.xSpeed = 0;
         this.ySpeed = 0;
         this.moving = false;
-        this.stop = 10;
+        this.stop = 10+this.randomFactor;
         this.xMove = 0;
         this.yMove = 0;
-        this.randomFactor = randomFactor;
+        this.randomFactor = randomFactor*2;
         this.left = this.x;
         this.right = this.x + this.scale;
         this.top = this.y;
@@ -78,7 +78,7 @@ class Slime {
             this.stop -= 1;
             if(this.stop <= 0) {
                 this.moving = false;
-                this.stop = 10;
+                this.stop = 10+this.randomFactor;
             }
         } else {
             if(this.stop > 0) {
@@ -104,7 +104,7 @@ class Slime {
                 }   
                
                 this.draw()
-                this.stop = 30;
+                this.stop = 30+this.randomFactor;
                 this.moving = true;
             }
         }
@@ -159,11 +159,12 @@ export function animateSlime() {
             })  
         
         const charDistance = Math.hypot(slime.centerPointX - char.centerPointX, slime.centerPointY - char.centerPointY) 
-        if ((charDistance - slime.scale/2 - char.scale/2) < 1 && heartUI.heartCount > 0 && heartUI.counter % 60 === 0) {
+        if ((charDistance - slime.scale/4 - char.scale/4) < 1 && heartUI.heartCount > 0 && heartUI.counter % 15 === 0) {
             heartUI.heartCount -= 1
             char.hit = true;
+            char.deathFrame = 0;
         }
-        console.log(char.centerPointX, char.centerPointY)
+        if((charDistance - slime.scale/4 - char.scale/4) < 1) console.log('true')
                 
     })
     handleGetHitFrame()

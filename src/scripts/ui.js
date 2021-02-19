@@ -21,7 +21,7 @@ export const drawUi = () => {
     ctx.fillRect(uiSideGap,uiSideGap,uiWidth,uiHeight)
 
     const dungeonWidth = uiWidth;
-    ctx.fillStyle = 'gray';
+    ctx.fillStyle = 'black';
     ctx.fillRect(uiSideGap, uiSideGap*2 + uiHeight, dungeonWidth, dungeonHeight)
 
     const uiBoxSizes = [.25, .075, .075, .2775];

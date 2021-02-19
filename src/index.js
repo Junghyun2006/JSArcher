@@ -4,7 +4,8 @@ import {moveChar, animate} from './scripts/character';
 import {animateArrows} from "./scripts/arrow";
 import {animateSlime, slimes} from "./scripts/slime";
 import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap, drawDirection} from "./scripts/dungeon";
-import {heart} from './scripts/heart';
+import {heart, heartUI} from './scripts/heart';
+import {gameOver, instruction} from './scripts/game'
 
 
 window.onload = function() {
@@ -12,16 +13,21 @@ window.onload = function() {
     setInterval(function() {
         ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
         drawCanvas();
-        drawUi();
-        heart();
-        drawDungeon(dungeonImg);
-        drawDirection();
-        drawMap();
-        animateSlime();
+        
+        if (heartUI.heartCount != 0) {
+            drawUi();
+            heart();
+            drawMap();
+            drawDungeon(dungeonImg);
+            drawDirection();
+            animateSlime(); 
+            moveChar();
+            animateArrows();
+            instruction();
+        }
         animate();
-        moveChar();
-        animateArrows();
-        drawDungeon(dungeonOverlay)
+        if (heartUI.heartCount === 0) gameOver();
+        else drawDungeon(dungeonOverlay)
     }, 1000/framesPerSecond);
 }
 

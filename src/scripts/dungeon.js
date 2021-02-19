@@ -1,5 +1,6 @@
 import {canvas, ctx} from './canvas';
-import {slimes} from './slime'
+import {slimes} from './slime';
+import {heartUI} from './heart'
 
 export const dungeonImg = new Image();
 dungeonImg.src = "src/images/CrystalCaverns_Midground.png";
@@ -8,18 +9,20 @@ export const dungeonOverlay = new Image();
 dungeonOverlay.src = "src/images/CrystalCaverns_Foreground.png"
 
 export function drawDungeon(image) {
+    // if (heartUI.heartCount != 0) {
+        ctx.drawImage(
+            image,
+            (canvas.height*.005) * dungeon.frameX,
+            0,
+            dungeon.width,
+            dungeon.height,
+            canvas.width * 0.0123,
+            canvas.height * 0.196,
+            canvas.width * 0.976,
+            canvas.height * 0.78
+        )
+    // }
     
-    ctx.drawImage(
-        image,
-        (canvas.height*.005) * dungeon.frameX,
-        0,
-        dungeon.width,
-        dungeon.height,
-        canvas.width * 0.0123,
-        canvas.height * 0.196,
-        canvas.width * 0.976,
-        canvas.height * 0.78
-    )
 }
 
 export const dungeon = {

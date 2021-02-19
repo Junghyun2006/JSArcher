@@ -1,7 +1,8 @@
-import {ctx, canvas} from './canvas'
+import {ctx, canvas} from './canvas';
 import {uiSideGap, dungeonHeight } from './ui';
-import {dungeon, map} from './dungeon'
-import {slimes} from './slime'
+import {dungeon, map} from './dungeon';
+import {slimes} from './slime';
+import {heartUI} from './heart';
 
 
 class Char {
@@ -33,7 +34,7 @@ class Char {
 
 export const char = new Char();
 
-const charSprite = new Image(); // running
+const charSprite = new Image(); 
 charSprite.src = "src/sprites/Huntress/Sprites/Character/Run.png";
 
 const charShooting = new Image();
@@ -80,12 +81,12 @@ export function drawSprite(img, frame) {
 }
 
 export function animate(){
-    // if (char.dead) {
-    //     drawSprite(
-    //         charGetHit, 
-    //         char.getHitFrame)
-    // }
-    if (char.hit) {
+    if (char.dead) {
+        drawSprite(
+            charDeath, 
+            char.deathFrame)
+    }
+    else if (char.hit) {
         drawSprite(
             charGetHit, 
             char.getHitFrame)
@@ -107,7 +108,7 @@ export function animate(){
             char.idleFrame)
     }
     handleIdleFrame();
-    // handleDeathFrame();
+    handleDeathFrame();
 }
 
 
@@ -119,7 +120,6 @@ function handleSpriteFrame() {
 }
 
 export function handleShootingFrame() {
-    char.counter+=1;
     if (char.counter % 3 === 0) {
         if (char.frameY < 5) char.frameY++;
         else char.frameY = 0;
@@ -137,6 +137,7 @@ export function handleGetHitFrame() {
 }
 
 export function handleIdleFrame() {
+    char.counter+=1;
     char.moving = false;
     if (char.counter % 5 === 0) {
         if (char.idleFrame < 9) {char.idleFrame++}
@@ -148,11 +149,12 @@ export function handleIdleFrame() {
 
 export function handleDeathFrame() {
     char.moving = false;
-    if (char.counter % 5 === 0) {
+    if (heartUI.heartCount === 0) {
+        char.dead = true
+    }
+
+    if (char.counter % 15 === 0) {
         if (char.deathFrame < 9) {char.deathFrame++}
-        else {
-            char.deathFrame = 0;  
-        }
     }
 }
 
