@@ -28,6 +28,7 @@ class Char {
         this.clickXPos = 0;
         this.hit = false;
         this.dead = false;
+        this.invulnerable = false;
     }
    
 };
@@ -134,6 +135,10 @@ export function handleGetHitFrame() {
             char.hit = false;    
         }
     }
+    if (char.invulnerable) {
+        char.frameX = 11;
+    }
+    if (char.counter % 120 === 0) {char.invulnerable = false}
 }
 
 export function handleIdleFrame() {

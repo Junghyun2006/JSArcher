@@ -159,12 +159,13 @@ export function animateSlime() {
             })  
         
         const charDistance = Math.hypot(slime.centerPointX - char.centerPointX, slime.centerPointY - char.centerPointY) 
-        if ((charDistance - slime.scale/4 - char.scale/4) < 1 && heartUI.heartCount > 0 && heartUI.counter % 15 === 0) {
+        if ((charDistance - slime.scale/4 - char.scale/4) < 1 && heartUI.heartCount > 0 && char.invulnerable != true) {
             heartUI.heartCount -= 1
+            char.invulnerable = true;
+            char.counter = 1;
             char.hit = true;
             char.deathFrame = 0;
         }
-        if((charDistance - slime.scale/4 - char.scale/4) < 1) console.log('true')
                 
     })
     handleGetHitFrame()
