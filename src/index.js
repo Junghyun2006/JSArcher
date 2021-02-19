@@ -6,9 +6,11 @@ import {animateSlime, slimes} from "./scripts/slime";
 import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap, drawDirection} from "./scripts/dungeon";
 import {heart, heartUI} from './scripts/heart';
 import {gameOver, instruction} from './scripts/game'
-
+import {gameMusic} from './scripts/gameMusic'
+ 
 
 window.onload = function() {
+    gameMusic.play()
     const framesPerSecond = 60;
     setInterval(function() {
         ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
@@ -26,7 +28,12 @@ window.onload = function() {
             instruction();
         }
         animate();
-        if (heartUI.heartCount === 0) gameOver();
+        if (heartUI.heartCount === 0) {
+            gameOver()
+            setTimeout(() => {
+                window.location.reload(false)
+            }, 5000);
+        }
         else drawDungeon(dungeonOverlay)
     }, 1000/framesPerSecond);
 }
