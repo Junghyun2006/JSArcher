@@ -10,7 +10,6 @@ import {gameMusic} from './scripts/gameMusic'
  
 
 window.onload = function() {
-    gameMusic.play()
     const framesPerSecond = 60;
     setInterval(function() {
         ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
