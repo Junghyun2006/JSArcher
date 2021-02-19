@@ -1,5 +1,5 @@
 import {ctx, canvas} from './canvas';
-import { drawSprite, animate, char } from './character';
+import { drawSprite, animate, char, handleGetHitFrame } from './character';
 import {arrows} from './arrow';
 import {heart, heartUI} from './heart';
 
@@ -161,10 +161,12 @@ export function animateSlime() {
         const charDistance = Math.hypot(slime.centerPointX - char.centerPointX, slime.centerPointY - char.centerPointY) 
         if ((charDistance - slime.scale/2 - char.scale/2) < 1 && heartUI.heartCount > 0 && heartUI.counter % 60 === 0) {
             heartUI.heartCount -= 1
+            char.hit = true;
         }
         console.log(char.centerPointX, char.centerPointY)
                 
     })
+    handleGetHitFrame()
 }
 
 

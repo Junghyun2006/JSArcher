@@ -71,16 +71,16 @@ export function drawMap() {
         canvas.width * .0205,
         canvas.height * .03875,
         canvas.width*.244,
-        canvas.width*.338 * map.height / map.width
+        canvas.width*.339 * map.height / map.width
 
     )
 
      ctx.drawImage(
         dungeonOverlay,
-        canvas.width * .0205,
+        canvas.width * .02025,
         canvas.height * .03875,
         canvas.width*.244,
-        canvas.width*.338 * map.height / map.width
+        canvas.width*.339 * map.height / map.width
 
     )
     
