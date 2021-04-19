@@ -4,6 +4,18 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.profile {
+    position: absolute;
+    /* top: 15px; */
+    left: 2px;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-icon-container {
+  margin-right: 10px;
+}
 /* .center {
   display: flex;
   align-items: center;
@@ -47,3 +59,4 @@ h2 {
 } */ */
 
 /*# sourceMappingURL=main.css.map
+

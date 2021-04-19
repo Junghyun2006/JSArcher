@@ -5,8 +5,10 @@ import {animateArrows} from "./scripts/arrow";
 import {animateSlime, slimes} from "./scripts/slime";
 import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap, drawDirection} from "./scripts/dungeon";
 import {heart, heartUI} from './scripts/heart';
-import {gameOver, instruction} from './scripts/game'
+import {gameOver, instruction, arrowStats, statBars} from './scripts/game'
 import {gameMusic} from './scripts/gameMusic'
+import {animateSkeleton, skeletons} from "./scripts/skeleton"
+
  
 
 window.onload = function() {
@@ -21,10 +23,13 @@ window.onload = function() {
             drawMap();
             drawDungeon(dungeonImg);
             drawDirection();
-            animateSlime(); 
+            if (skeletons.length > 0) animateSkeleton();
+            if (slimes.length > 0) animateSlime(); 
             moveChar();
             animateArrows();
             instruction();
+            arrowStats();
+            statBars();
         }
         animate();
         if (heartUI.heartCount === 0) {

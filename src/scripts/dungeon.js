@@ -1,6 +1,8 @@
 import {canvas, ctx} from './canvas';
-import {slimes} from './slime';
-import {heartUI} from './heart'
+import {slimes, createSlimes} from './slime';
+import {createSkeletons, skeletons} from "./skeleton"
+import {heartUI} from './heart';
+import {animateChest} from './chest';
 
 export const dungeonImg = new Image();
 dungeonImg.src = "src/images/CrystalCaverns_Midground.png";
@@ -9,7 +11,6 @@ export const dungeonOverlay = new Image();
 dungeonOverlay.src = "src/images/CrystalCaverns_Foreground.png"
 
 export function drawDungeon(image) {
-    // if (heartUI.heartCount != 0) {
         ctx.drawImage(
             image,
             (canvas.height*.005) * dungeon.frameX,
@@ -21,14 +22,28 @@ export function drawDungeon(image) {
             canvas.width * 0.976,
             canvas.height * 0.78
         )
-    // }
-    
+        if (dungeon.frameX === 175 && dungeon.chest === false) {
+            dungeon.frameX++
+            dungeon.chest = true
+        };
+
+        if ( slimes.length < 1 && dungeon.frameX < 3) {
+                dungeon.chest = true;
+                dungeon.frameX++;
+        };
+
+        if (dungeon.frameX === 172) {
+            dungeon.frameX = 173
+            createSkeletons(5)
+        }
+        animateChest();
 }
 
 export const dungeon = {
     width: 2625,
     height: 1080,
     frameX: 0,
+    chest: false
 }
 
 export const directionImg = new Image();
@@ -57,7 +72,10 @@ export function drawDirection() {
         if (directionSprite.frame === 6) directionSprite.frame = 1;
     }
 
-    if (slimes.length < 1 && dungeon.frameX === 0) directionSprite.toggle = "on";
+    if (dungeon.frameX === 3 && dungeon.chest === false) {
+        directionSprite.toggle = "on";
+    }
+
     if (dungeon.frameX === 150) directionSprite.toggle = "off";
 }
 

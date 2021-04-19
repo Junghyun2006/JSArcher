@@ -1,8 +1,10 @@
 import {ctx, canvas} from './canvas';
 import {uiSideGap, dungeonHeight } from './ui';
 import {dungeon, map} from './dungeon';
-import {slimes} from './slime';
+import {slimes, createSlimes } from './slime';
 import {heartUI} from './heart';
+import {animateChest} from './chest'
+import { arrows } from './arrow';
 
 
 class Char {
@@ -29,6 +31,11 @@ class Char {
         this.hit = false;
         this.dead = false;
         this.invulnerable = false;
+        this.reset = true;
+        this.arrowCount = 1;
+        this.fireRate = 1;
+        this.arrSpeed = 1;
+        this.damage = 1;
     }
    
 };
@@ -110,6 +117,10 @@ export function animate(){
     }
     handleIdleFrame();
     handleDeathFrame();
+    
+    
+    if (char.counter % (Math.floor(100/char.fireRate)) === 0 && char.arrowCount === 0) char.arrowCount = 1;
+    
 }
 
 
@@ -212,7 +223,7 @@ export function moveChar() {
         char.moving = true;
         char.x += char.speed;
         char.centerPointX += char.speed;
-        if (dungeon.frameX < 490 && slimes.length < 1) {
+        if (dungeon.frameX < 490 && slimes.length < 1 && dungeon.chest === false) {
             dungeon.frameX += 1;
             map.location += (dungeon.frameX * canvas.width*.244 * .0000047736)
         } 

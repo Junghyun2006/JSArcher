@@ -86,16 +86,21 @@ export function animateArrows() {
     handleShootingFrame()
 }
 
+export const arrowSpec = {
+    arrowSpeed: 0.01
+}
+
 window.addEventListener('click', (event) => {
     const angle = Math.atan2(
         event.clientY - (char.y + (canvas.height*.19/2)), 
         event.clientX - (char.x + (canvas.height*.2/2)))
     const speed = {
-        x: Math.cos(angle) * (canvas.height*.02),
-        y: Math.sin(angle) * (canvas.height*.02)
+        x: Math.cos(angle) * (canvas.height*arrowSpec.arrowSpeed),
+        y: Math.sin(angle) * (canvas.height*arrowSpec.arrowSpeed)
 
     }
     // setTimeout(() => {
+    if (char.arrowCount > 0) {
         arrows.push(new Arrow( 
         char.x + (canvas.height*.2/2), 
         char.y + (canvas.height*.19/2.35), 
@@ -105,9 +110,12 @@ window.addEventListener('click', (event) => {
         0, 
         arrowSprite,
         angle))
+        char.arrowCount--
+        char.shooting = true;
+    }
     // }, 50)
     char.frameY = 0;
-    char.shooting = true;
+    
     char.clickXPos = event.clientX
 
 })

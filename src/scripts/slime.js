@@ -162,7 +162,6 @@ export function animateSlime() {
         if ((charDistance - slime.scale/4 - char.scale/4) < 1 && heartUI.heartCount > 0 && char.invulnerable != true) {
             heartUI.heartCount -= 1
             char.invulnerable = true;
-            char.counter =
             char.hit = true;
             char.deathFrame = 0;
         }
