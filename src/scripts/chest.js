@@ -22,6 +22,7 @@ class Chest {
     this.counter = 0;
     this.centerPointX = this.x + this.scale/2; 
     this.centerPointY = this.y + this.scale/2;
+    this.lastChest = false;
 
     // 300x300
   }
@@ -60,15 +61,17 @@ class Chest {
   }
 }
 
-const chester = new Chest(300, 300, 0, 0, chest);
+export const chester = new Chest(300, 300, 0, 0, chest);
 
 export function animateChest() {
     const charDistance = Math.hypot(chester.centerPointX - char.centerPointX, chester.centerPointY - char.centerPointY) 
     if ((charDistance - chester.scale/4 - char.scale/4) < 1 && dungeon.chest === true) {
-        dungeon.chest = false;
         arrowSpec.arrowSpeed = 0.010 + (0.005*char.arrSpeed)
-        char.arrSpeed += 1
-        char.fireRate += 1
+        if (char.arrSpeed < 4)char.arrSpeed += 1
+        if (char.fireRate < 3) char.fireRate += 1
+        if (char.arrSpeed === 4 || char.arrSpeed === 5) char.damage = 2;
+        if (chester.lastChest) char.damage = 3;
+        dungeon.chest = false;
     }
     if (dungeon.chest && skeletons.length === 0) chester.update();
 }

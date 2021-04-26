@@ -2,10 +2,10 @@ import {char} from "./character"
 
 const { ctx, canvas } = require("./canvas");
 
-export function gameOver() {
+export function gameOver(texts) {
     ctx.fillStyle = 'white';
     ctx.font = '40px sans serif';
-    const text = "Game Over..."
+    const text = texts
     ctx.fillText(text, canvas.width*0.5 - (ctx.measureText(text).width/2), canvas.height*0.5)
 }
 
@@ -14,8 +14,8 @@ export function instruction() {
     const fontSize = (canvas.width) * .009;
     ctx.fillStyle = 'white';
     ctx.font =  fontSize.toString() + 'px sans serif';
-    ctx.fillText("1. Use Arrow Keys or W, A, S, D to move & space to dash", canvas.width * .285, canvas.height*0.075)
-    ctx.fillText("2. Click to shoot arrow towards desired location", canvas.width * .285, canvas.height*0.105)
+    ctx.fillText("1. Use Arrow Keys or W, A, S, D to move", canvas.width * .285, canvas.height*0.075)
+    ctx.fillText("2. Click to shoot arrows toward desired location", canvas.width * .285, canvas.height*0.105)
     ctx.fillText("3. Kill the boss before your health drops to 0", canvas.width * .285, canvas.height*0.135)
 }
 
@@ -24,7 +24,7 @@ export function arrowStats() {
     ctx.fillStyle = 'white';
     ctx.font =  fontSize.toString() + 'px sans serif';
     ctx.fillText("Fire Rate", canvas.width * .5425, canvas.height*0.075)
-    ctx.fillText("Speed", canvas.width * .5425, canvas.height*0.105)
+    ctx.fillText("Arr. Speed", canvas.width * .5425, canvas.height*0.105)
     ctx.fillText("Damage", canvas.width * .5425, canvas.height*0.135)
 }
 

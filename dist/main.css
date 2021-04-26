@@ -7,8 +7,8 @@ body {
 
 .profile {
     position: absolute;
-    /* top: 15px; */
-    left: 2px;
+    left: 2.5%;
+    top: 1.3%; 
     display: flex;
     flex-direction: row;
 }

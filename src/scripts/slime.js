@@ -167,7 +167,7 @@ export function animateSlime() {
         }
                 
     })
-    handleGetHitFrame()
+    // handleGetHitFrame()
 }
 
 

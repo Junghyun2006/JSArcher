@@ -7,7 +7,9 @@ import {dungeon, drawDungeon, dungeonImg, dungeonOverlay, drawMap, drawDirection
 import {heart, heartUI} from './scripts/heart';
 import {gameOver, instruction, arrowStats, statBars} from './scripts/game'
 import {gameMusic} from './scripts/gameMusic'
-import {animateSkeleton, skeletons} from "./scripts/skeleton"
+import {animateSkeleton, skeletons} from "./scripts/skeleton";
+import {animateDragon, dragonSprite} from "./scripts/dragon"
+import {animateFireball} from "./scripts/fireball"
 
  
 
@@ -23,17 +25,25 @@ window.onload = function() {
             drawMap();
             drawDungeon(dungeonImg);
             drawDirection();
-            if (skeletons.length > 0) animateSkeleton();
-            if (slimes.length > 0) animateSlime(); 
+            animateSkeleton();
+            animateSlime(); 
             moveChar();
             animateArrows();
             instruction();
             arrowStats();
             statBars();
+            if (dragonSprite.alive === true) animateDragon();
+            // animateDragon();
         }
         animate();
         if (heartUI.heartCount === 0) {
-            gameOver()
+            gameOver('Game Over...')
+            setTimeout(() => {
+                window.location.reload(false)
+            }, 5000);
+        }
+        if (dragonSprite.health <= 0 && (!dragonSprite.alive)) {
+            gameOver('VICTORY!!')
             setTimeout(() => {
                 window.location.reload(false)
             }, 5000);

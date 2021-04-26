@@ -2,7 +2,9 @@ import {canvas, ctx} from './canvas';
 import {slimes, createSlimes} from './slime';
 import {createSkeletons, skeletons} from "./skeleton"
 import {heartUI} from './heart';
-import {animateChest} from './chest';
+import {animateChest, chester} from './chest';
+import {animateDragon, dragonSprite} from './dragon'
+import { char } from './character';
 
 export const dungeonImg = new Image();
 dungeonImg.src = "src/images/CrystalCaverns_Midground.png";
@@ -22,9 +24,15 @@ export function drawDungeon(image) {
             canvas.width * 0.976,
             canvas.height * 0.78
         )
-        if (dungeon.frameX === 175 && dungeon.chest === false) {
+
+        if (dungeon.frameX === 172) {
             dungeon.frameX++
+            createSkeletons(5)
+        }
+
+        if (dungeon.frameX < 175 && dungeon.frameX > 172 && dungeon.chest === false && skeletons.length < 1) {
             dungeon.chest = true
+            dungeon.frameX++
         };
 
         if ( slimes.length < 1 && dungeon.frameX < 3) {
@@ -32,11 +40,28 @@ export function drawDungeon(image) {
                 dungeon.frameX++;
         };
 
-        if (dungeon.frameX === 172) {
-            dungeon.frameX = 173
-            createSkeletons(5)
+        if (dungeon.frameX === 350) {
+            dungeon.frameX++
+            createSkeletons(4)
+            createSlimes(3)
         }
+
+        if (dungeon.frameX < 353 && dungeon.frameX > 350 && dungeon.chest === false && skeletons.length < 1) {
+            dungeon.chest = true
+            chester.lastChest = true;
+            dungeon.frameX++
+        };
+        
+
         animateChest();
+
+        if (dungeon.frameX === 489) {
+            dungeon.frameX++
+            dragonSprite.alive = true;
+            
+        }
+       
+
 }
 
 export const dungeon = {

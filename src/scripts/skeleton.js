@@ -2,6 +2,7 @@ import {ctx, canvas} from './canvas';
 import { drawSprite, animate, char, handleGetHitFrame } from './character';
 import {arrows} from './arrow';
 import {heart, heartUI} from './heart';
+import {drawSkeletonHealth, skeletonHealth} from './health';
 
 const skeleton = new Image();
 skeleton.src  = "src/sprites/Skeleton/Skeleton.png";
@@ -32,19 +33,39 @@ class Skeleton {
         this.right = this.x + this.scale;
         this.top = this.y;
         this.bot = this.y + this.scale;
+        this.health = 3;
     }
 
     draw() {
-        ctx.drawImage(
-            this.sprite,
-            this.width * this.frameX,
-            0,
-            this.width,
-            this.height,
-            this.x,
-            this.y,
-            this.scale, 
-            this.scale)   
+        drawSkeletonHealth(this.x+canvas.width*.0325, this.y+canvas.width*.01, 3 - this.health)
+        this.flip = char.x > this.x ? 'left' : 'right';
+        if (this.flip !== 'right') {
+            ctx.drawImage(
+                this.sprite,
+                this.width * this.frameX,
+                0,
+                this.width,
+                this.height,
+                this.x,
+                this.y,
+                this.scale, 
+                this.scale)   
+        } else if (this.flip === 'right') {
+            ctx.save();
+            ctx.translate(this.x+(canvas.height*.15), this.y);
+            ctx.scale(-1, 1);
+            ctx.drawImage(
+                this.sprite, 
+                this.width * this.frameX, 
+                0, 
+                this.width, 
+                this.height, 
+                0, 
+                0, 
+                this.scale, 
+                this.scale) ;
+            ctx.restore();
+        }
     }
 
     update() {
@@ -56,9 +77,9 @@ class Skeleton {
         if (this.counter % 4 === 0) {
             if (Math.abs(this.x - char.x) < 200 && this.frameX < 15) {
                 this.frameX++
-            } else if (this.frameX < 8) {
+            } else if (this.frameX < 8 || (this.frameX > 33 && this.frameX < 36)) {
                 this.frameX++
-            } else if (this.frameX === 8 || this.frameX === 15) {
+            } else if (this.frameX === 8 || this.frameX === 15 || this.frameX === 36) {
                 this.frameX = 0;
             } else {
                 this.frameX++
@@ -85,9 +106,9 @@ class Skeleton {
                 this.stop -= 1;
                 this.draw();
             } else {
-                if (Math.abs(char.x - this.x) < canvas.height/4 && Math.abs(char.y - this.y) < canvas.height/4   ) { // && this.randomFactor % 2 === 0
-                    this.xMove = char.centerPointX
-                    this.yMove = char.centerPointY
+                if (Math.abs(char.x - this.x) < canvas.width/4 && Math.abs(char.y - this.y) < canvas.width/4   ) { // && this.randomFactor % 2 === 0
+                    this.xMove = char.centerPointX - (canvas.width * .0175)
+                    this.yMove = char.centerPointY - (canvas.height * .025)
                     if (Math.abs(char.x - this.x) < canvas.height/4) {
                         this.xSpeed = (this.xMove - this.x)/30;
                         this.ySpeed = (this.yMove - this.y)/30;
@@ -144,11 +165,13 @@ export function animateSkeleton() {
             // console.log(distance)
 
             if ((arrDistance - skeleton.scale/2) < 1) {
-                skeletons.splice(index, 1)
+                skeleton.health -= char.damage;
+                skeleton.frameX = 34;
+                if (skeleton.health <= 0) skeletons.splice(index, 1);
                 arrow.hit = true; 
             }
             // Rectangular formula
-            // if (slime.x < arrow.right &&
+            // if (slime.x < arrow.right &&s
             //     slime.right > arrow.x &&
             //     slime.y < arrow.bot &&
             //     slime.bot > arrow.y) {
@@ -165,5 +188,5 @@ export function animateSkeleton() {
         }
                 
     })
-    handleGetHitFrame()
+    // handleGetHitFrame()
 }

@@ -5,6 +5,7 @@ import {slimes, createSlimes } from './slime';
 import {heartUI} from './heart';
 import {animateChest} from './chest'
 import { arrows } from './arrow';
+import { skeletons } from './skeleton';
 
 
 class Char {
@@ -71,7 +72,7 @@ export function drawSprite(img, frame) {
             (canvas.height*.2));
     } else if (char.flip != 'right') {
         ctx.save();
-        ctx.translate(char.x+(canvas.height*.2), char.y)+(canvas.height*.2);
+        ctx.translate(char.x+(canvas.height*.2), char.y);
         ctx.scale(-1, 1);
         ctx.drawImage(
             img, 
@@ -117,6 +118,7 @@ export function animate(){
     }
     handleIdleFrame();
     handleDeathFrame();
+    handleGetHitFrame();
     
     
     if (char.counter % (Math.floor(100/char.fireRate)) === 0 && char.arrowCount === 0) char.arrowCount = 1;
@@ -191,14 +193,11 @@ const keys = {
 window.addEventListener("keydown", (e) => {
     e.preventDefault();
     keys[e.key] = true;
-    // char.moving = true;
-    console.log(e.key)
 });
 
 window.addEventListener("keyup", (e) => {
     e.preventDefault();
     keys[e.key] = false;
-    // char.moving = false;
 });
 
 export function moveChar() {
@@ -223,20 +222,20 @@ export function moveChar() {
         char.moving = true;
         char.x += char.speed;
         char.centerPointX += char.speed;
-        if (dungeon.frameX < 490 && slimes.length < 1 && dungeon.chest === false) {
+        if (dungeon.frameX < 490 && slimes.length < 1 && dungeon.chest === false && skeletons.length < 1) {
             dungeon.frameX += 1;
             map.location += (dungeon.frameX * canvas.width*.244 * .0000047736)
         } 
         char.flip = 'right';
         handleSpriteFrame()} 
-    if (keys[' ']) {
-        if (char.flip === 'right' && (char.x > ((uiSideGap)-30*char.actualScale)) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale)) ) {
-            char.x += char.speed*4
-            char.centerPointX += char.speed*4
-        } else if (char.flip != 'right' && (char.x > ((uiSideGap)-30*char.actualScale)) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale))) {
-            char.x -= char.speed*4
-            char.centerPointX -= char.speed*4
-        } 
-    }
+    // if (keys[' ']) {
+    //     if (char.flip === 'right' && (char.x > ((uiSideGap)-30*char.actualScale)) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale)) ) {
+    //         char.x += char.speed*4
+    //         char.centerPointX += char.speed*4
+    //     } else if (char.flip != 'right' && (char.x > ((uiSideGap)-30*char.actualScale)) && (char.x < (canvas.width-(uiSideGap)-70*char.actualScale))) {
+    //         char.x -= char.speed*4
+    //         char.centerPointX -= char.speed*4
+    //     } 
+    // }
 }
 
