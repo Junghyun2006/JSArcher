@@ -17,7 +17,7 @@ Players will be able to:
 
 Wireframe
 ---------
-![alt text](https://github.com/Junghyun2006/JSproject/blob/master/src/images/Screen%20Shot%202021-02-08%20at%208.50.06%20AM.png)
+![alt text](https://github.com/Junghyun2006/JSproject/blob/master/src/images/WireFrame.png)
 
 Architecture and Technology
 -----------------
