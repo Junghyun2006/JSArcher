@@ -17,7 +17,7 @@ Players will be able to:
 
 Wireframe
 ---------
-![alt text](https://github.com/Junghyun2006/JSproject/blob/master/src/images/WireFrame.png)
+![alt text](https://github.com/Junghyun2006/JSArcher/blob/main/src/images/WireFrame.png)
 
 Architecture and Technology
 -----------------
