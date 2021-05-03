@@ -54,7 +54,3 @@ Day 3: Build the logic behind skills and weapons & finalize game logic
   
 Day 4: Css and styling
   * style the character, monsters, and dungeons to be fliud and presentable.
-
-  
-  
-
