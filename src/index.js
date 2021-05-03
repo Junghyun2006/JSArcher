@@ -43,7 +43,7 @@ window.onload = function() {
             }, 5000);
         }
         if (dragonSprite.health <= 0 && (!dragonSprite.alive)) {
-            gameOver('VICTORY!!')
+            gameOver('VICTORY')
             setTimeout(() => {
                 window.location.reload(false)
             }, 5000);
